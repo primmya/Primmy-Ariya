@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+
+  <style>
+    :root{
+      --bg: #f2f2f5;
+      --fg: #0b0b0f;
+      --link: rgba(41,205,242,1);
+      --muted: #0b0b0f;
+      --line: rgba(0,0,0,0.12);
+      --card: rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Arial Narrow", Arial, sans-serif;
+      font-weight: 550;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.2;
+    }
+
+    a { color: var(--fg); text-decoration: none; }
+    a:hover { color: var(--link);text-decoration: underline; }
+
+    .wrap {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+   header.site {
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      min-height: 80vh;   /* better than padding-bottom: 500px */
+      position: relative;
+    }
+
+
+    .name {
+      margin: 0 0 0px;
+      font-weight: 550;
+      font-size: 20px;
+    }
+    .bio {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 20px;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    /* keeps name + bio stacked */
+    .header-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* info button styling */
+    .info-btn {
+      margin: 0 0 0px;
+      font-weight: 550;
+      font-size: 20px;
+    }
+
+    .info-btn:hover,
+    .info-btn:focus,
+    .info-btn:active {
+      background-color: var(--link); /* teal box */
+      border-color: var(--link);
+      color: var(--bg);              /* text flips for contrast */
+    }
+
+    @keyframes softBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(6px);
+      }
+    }
+
+      .scroll-hint {
+      font-family: Pixeled;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 50px;
+      margin: 0;
+      text-align: center;
+      opacity: 0.9;
+      pointer-events: none;
+
+       display: inline-block;                 /* allows transform */
+        animation: softBounce 2.2s ease-in-out infinite;
+        transform-origin: center;
+          }
+
+
+
+    main {
+      padding: 28px 0 72px;
+    }
+
+    /* Each project is a section with a sticky title row */
+    section.project {
+      padding: 0 0 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sticky-title {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      /* Make it readable when it sticks */
+      background: color-mix(in oklab, var(--bg) 100%, transparent);
+    
+
+      padding: 14px 0;
+      /*border-bottom: 1px solid var(--line);*/
+    }
+
+    .title-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 550;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 20px;
+      white-space: nowrap;
+    }
+
+    .content {
+      padding: 18px 0 0;
+      display: grid;
+      grid-template-columns: 0.75fr 1.45fr;
+      gap: 40px;
+      font-size: 20px;
+    }
+
+    .desc {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tags li{
+      font-size: 20px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .media {
+      
+      overflow: hidden;
+    }
+
+    .media img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .media video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .media span{
+      color: var(--muted);
+      font-size: 13px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .media.two-col {
+      display: grid;
+      grid-template-columns: 1fr 1.69fr;
+      gap: 12px;
+    }
+
+    .media.two-col img,
+    .media.two-col video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+
+    .media.grid-3 {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 12px;
+    }
+
+    .media.grid-3 img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+
+    .links {
+      margin-top: 12px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .media-link {
+      display: block;
+      cursor: url("images/pointer.png") 16 16, pointer;
+    }
+
+
+    footer {
+      padding: 36px 0 48px;
+      font-family: Pixeled;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Mobile layout */
+    @media (max-width: 820px) {
+      .content { grid-template-columns: 1fr; }
+      .meta { white-space: normal; text-align: right; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site">
+  <div class="wrap header-row">
+    <div class="header-left">
+      <h1 class="name">PRIMMY ARIYASANTICHAI</h1>
+      <p class="bio">
+        A graphic designer from Bangkok, Thailand.
+        Pursuing a BFA in Graphic Design at Rhode Island School of Design (RISD). Exploring motion, sound and sensory storytelling through visuals.
+      </p>
+    </div>
+
+    <button class="info-btn">info</button>
+  </div>
+
+  <div class="wrap">
+    <div class="scroll-hint">scroll ▼ for more</div>
+  </div>
+</header>
+
+  <main class="wrap">
+
+    <!-- PROJECT 1 -->
+    <section id="p1" class="project">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>01&nbsp;&nbsp;&nbsp;Find the Whimsy</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            An interactive photobooth that blends analog and digital play, where visitors receive a Whimsy Wayfinder along with a printed sticker, and use a QR code to access a shared Google Drive of collective photos—encouraging attention to small, whimsical moments in everyday life.
+          </p>
+
+          <div class="links">
+            <a href="project-01-whimsy.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>identity</li>
+            <li>creative coding</li>
+            <li>ephemera</li>
+          </ul>
+        </div>
+      <a href="project-01-whimsy.html" class="media-link">
+        <div class="media two-col">
+           <img src="images/whimsy.png">
+           <video src="images/whimsy.mp4" autoplay loop muted playsinline></video>
+        </div>
+      </a>
+
+      </div>
+    </section>
+
+    <!-- PROJECT 2 -->
+    <section id="p2" class="project">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>02&nbsp;&nbsp;&nbsp;Nostalgia Type</h2>
+          <div class="meta">2026</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            Visually exploring fading memories through the audio instancing of old photographs onto type, allowing nostalgia to stay complicated and unfinished.
+          </p>
+
+          <div class="links">
+           <a href="project-02-nostalgia.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>creative coding</li>
+            <li>ephemera</li>
+          </ul>
+        </div>
+      <a href="project-02-nostalgia.html" class="media-link">
+        <div class="media">
+          <video autoplay loop muted playsinline>
+          <source src="fading.mp4" type="video/mp4">
+          </video>
+        </div>
+      </a>
+      </div>
+    </section>
+
+    <!-- PROJECT 3 -->
+    <section id="p2" class="project">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>03&nbsp;&nbsp;&nbsp;Money's Worth</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            A site that maps every corner of the RISD museum where you can find free take-home institutional ephemera, helping you calculate exactly how many objects you would need to “break even” on your visit.
+          </p>
+
+          <div class="links">
+           <a href="project-03-moneysworth.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>web</li>
+            <li>intervention</li>
+          </ul>
+        </div>
+<a href="project-03-moneysworth.html" class="media-link">
+        <div class="media">
+          <img src="images/moneys worth2.png">
+        </div>
+      </a>
+      </div>
+    </section>
+
+    <!-- PROJECT 4 -->
+    <section id="p3" class="project" style="border-bottom: none;">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>04&nbsp;&nbsp;&nbsp;Two Designer Timeline</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            An accordion-book timeline that places Paula Scher and Chloe Scheffe side by side, directly showing how each redfined graphic design in their respective eras.
+          </p>
+
+          <div class="links">
+            <a href="project-04-2dt.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>print</li>
+            <li>publication</li>
+          </ul>
+        </div>
+<a href="project-04-2dt.html" class="media-link">
+        <div class="media">
+          <img src="images/2dt.jpg">
+        </div>
+      </a>
+      </div>
+    </section>
+
+    <!-- PROJECT 5 -->
+    <section id="p2" class="project">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>05&nbsp;&nbsp;&nbsp;Labour of Love</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            A research-driven zine that reframes Thai femininity as labour, exposing how care, intimacy, and “love” are commodified and exploited through tourism, domestic work, and sex work.
+          </p>
+
+          <div class="links">
+           <a href="project-05-labouroflove.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>print</li>
+            <li>publication</li>
+          </ul>
+        </div>
+<a href="project-05-labouroflove.html" class="media-link">
+        <div class="media">
+          <img src="images/labour of love1.png">
+        </div>
+</a>
+      </div>
+    </section>
+
+    <!-- PROJECT 6 -->
+    <section id="p2" class="project">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>06&nbsp;&nbsp;&nbsp;Where I Looked</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            A visual heatmap of photographs I've taken across the cities I have lived in, morphed into topographic form. The more I have seen, the higher the ground becomes.
+          </p>
+
+          <div class="links">
+           <a href="project-06-heatmap.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>poster</li>
+            <li>creative coding</li>
+          </ul>
+        </div>
+<a href="project-06-heatmap.html" class="media-link">
+        <div class="media grid-3">
+          <img src="heatmap1.gif" alt="">
+          <img src="heatmap2.gif" alt="">
+          <img src="heatmap3.gif" alt="">
+        </div>
+</a>
+      </div>
+    </section>
+
+    <!-- PROJECT 7 -->
+    <section id="p3" class="project" style="border-bottom: none;">
+      <div class="sticky-title">
+        <div class="title-row">
+          <h2>07&nbsp;&nbsp;&nbsp;Silence Blooms</h2>
+          <div class="meta">2025</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div>
+          <p class="desc">
+            A series of motion posters for a hypothetical music event, blurring the lines between sound, data and nature. This audio reactive visual shows flowers blooming in rhythm.
+          </p>
+
+          <div class="links">
+            <a href="project-07-silenceblooms.html">view →</a>
+          </div>
+
+          <ul class="tags">
+            <li>poster</li>
+            <li>creative coding</li>
+          </ul>
+        </div>
+<a href="project-07-silenceblooms.html" class="media-link">
+        <div class="media">
+          <img src="images/Silence Blooms.jpg">
+        </div>
+      </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span id="datetime"></span> . primmy ariyasantichai 
+    </div>
+  </footer>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+
+    document.getElementById("datetime").textContent =
+      now.toLocaleString('en-US', options);
+  }
+
+  updateDateTime();                 // run once immediately
+  setInterval(updateDateTime, 1000); // update every second
+</script>
+</body>
+</html>
+
