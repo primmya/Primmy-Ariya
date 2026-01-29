@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
+  <title>you are viewing Primmy Ariya's virtual space!</title>
 
   <style>
     :root{
@@ -539,6 +539,18 @@
   updateDateTime();                 // run once immediately
   setInterval(updateDateTime, 1000); // update every second
 </script>
+<script>
+  let titleText = " you are viewing Primmy Ariya's virtual space! ";
+  let speed = 200; // smaller = faster
+
+  function scrollTitle() {
+    titleText = titleText.substring(1) + titleText[0];
+    document.title = titleText;
+  }
+
+  setInterval(scrollTitle, speed);
+</script>
+
 </body>
 </html>
 
